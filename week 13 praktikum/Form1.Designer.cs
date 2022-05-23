@@ -155,7 +155,7 @@
             // 
             this.textBox_playerName.Location = new System.Drawing.Point(153, 131);
             this.textBox_playerName.Name = "textBox_playerName";
-            this.textBox_playerName.Size = new System.Drawing.Size(216, 20);
+            this.textBox_playerName.Size = new System.Drawing.Size(185, 20);
             this.textBox_playerName.TabIndex = 11;
             // 
             // dateTimePicker_birthDate
@@ -170,7 +170,7 @@
             this.comboBox_nationality.FormattingEnabled = true;
             this.comboBox_nationality.Location = new System.Drawing.Point(153, 201);
             this.comboBox_nationality.Name = "comboBox_nationality";
-            this.comboBox_nationality.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_nationality.Size = new System.Drawing.Size(185, 21);
             this.comboBox_nationality.TabIndex = 13;
             // 
             // numericUpDown_teamNumber
@@ -179,6 +179,7 @@
             this.numericUpDown_teamNumber.Name = "numericUpDown_teamNumber";
             this.numericUpDown_teamNumber.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown_teamNumber.TabIndex = 15;
+            this.numericUpDown_teamNumber.ValueChanged += new System.EventHandler(this.numericUpDown_teamNumber_ValueChanged);
             // 
             // button_save
             // 
@@ -188,6 +189,7 @@
             this.button_save.TabIndex = 16;
             this.button_save.Text = "Save";
             this.button_save.UseVisualStyleBackColor = true;
+            this.button_save.Click += new System.EventHandler(this.button_save_Click);
             // 
             // button_Cancel
             // 
@@ -197,19 +199,20 @@
             this.button_Cancel.TabIndex = 17;
             this.button_Cancel.Text = "Cancel";
             this.button_Cancel.UseVisualStyleBackColor = true;
+            this.button_Cancel.Click += new System.EventHandler(this.button_Cancel_Click);
             // 
             // comboBox_team
             // 
             this.comboBox_team.FormattingEnabled = true;
             this.comboBox_team.Location = new System.Drawing.Point(152, 233);
             this.comboBox_team.Name = "comboBox_team";
-            this.comboBox_team.Size = new System.Drawing.Size(121, 21);
+            this.comboBox_team.Size = new System.Drawing.Size(186, 21);
             this.comboBox_team.TabIndex = 18;
             // 
             // label_avail
             // 
             this.label_avail.AutoSize = true;
-            this.label_avail.Location = new System.Drawing.Point(319, 276);
+            this.label_avail.Location = new System.Drawing.Point(303, 274);
             this.label_avail.Name = "label_avail";
             this.label_avail.Size = new System.Drawing.Size(50, 13);
             this.label_avail.TabIndex = 19;

@@ -26,6 +26,7 @@ namespace week_13_praktikum
         DataTable dtPemain = new DataTable();
         DataTable dtNationality = new DataTable();
         DataTable dtTeam = new DataTable();
+        DataTable dtNumber = new DataTable();
         int PosisiSekarang = 0;
 
         public void IsiDataPemain(int Posisi)
@@ -35,7 +36,7 @@ namespace week_13_praktikum
             textBox_playerName.Text = dtPemain.Rows[Posisi][1].ToString();
             dateTimePicker_birthDate.Text = dtPemain.Rows[Posisi][2].ToString();
             comboBox_nationality.SelectedValue = dtPemain.Rows[Posisi][3].ToString();
-            comboBox_team.SelectedValue = dtPemain.Rows[Posisi][4].ToString();
+            comboBox_team.Text = dtPemain.Rows[Posisi][4].ToString();
             numericUpDown_teamNumber.Text = dtPemain.Rows[Posisi][5].ToString();
             PosisiSekarang = Posisi;
         }
@@ -56,6 +57,14 @@ namespace week_13_praktikum
             comboBox_nationality.DisplayMember = "Nationality";
             comboBox_nationality.ValueMember = "Nationality";
 
+            sqlQuery = "select t.team_name as `Team`, p.team_id as TeamID from player p, team t where p.team_id = t.team_id group by t.team_id";
+            sqlCommand = new MySqlCommand(sqlQuery, sqlConnect);
+            sqlAdapter = new MySqlDataAdapter(sqlCommand);
+            sqlAdapter.Fill(dtTeam);
+            comboBox_team.DataSource = dtTeam;
+            comboBox_team.DisplayMember = "Team";
+            comboBox_team.ValueMember = "TeamID";
+            IsiDataPemain(0);
         }
 
         private void button_prev2_Click(object sender, EventArgs e)
@@ -92,6 +101,47 @@ namespace week_13_praktikum
         private void button_next2_Click(object sender, EventArgs e)
         {
             IsiDataPemain(dtPemain.Rows.Count - 1);
+        }
+
+        private void button_save_Click(object sender, EventArgs e)
+        {
+            if (label_avail.Text == "Available")
+            {
+                sqlQuery = $"UPDATE player SET player_name = '" + textBox_playerName.Text + "', team_number = '" + numericUpDown_teamNumber.Value.ToString() + "', nationality_id = '" + comboBox_nationality.SelectedValue.ToString() + "', team_id = '" + comboBox_team.SelectedValue.ToString() + "' where player_id = '" + textBox_playerID.Text + "' ";
+                sqlConnect.Open();
+                sqlCommand = new MySqlCommand(sqlQuery, sqlConnect);
+                sqlCommand.ExecuteNonQuery();
+                sqlConnect.Close();
+            }
+
+            else if (label_avail.Text == "Not Available")
+            {
+                MessageBox.Show("Nomor Tim Tidak Tersedia");
+            }
+            
+        }
+
+        private void button_Cancel_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void numericUpDown_teamNumber_ValueChanged(object sender, EventArgs e)
+        {
+            dtNumber = new DataTable();
+            sqlQuery = $"SELECT * FROM player WHERE team_id='{comboBox_team.SelectedValue}' and team_number={numericUpDown_teamNumber.Value}";
+            sqlCommand = new MySqlCommand(sqlQuery, sqlConnect);
+            sqlAdapter = new MySqlDataAdapter(sqlCommand);
+            sqlAdapter.Fill(dtNumber);
+
+            if (dtNumber.Rows.Count > 0)
+            {
+                label_avail.Text = "Not Available";
+            }
+            else
+            {
+                label_avail.Text = "Available";
+            }
         }
     }
 }
